@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/SuperPony/js-learn/issues"
   },
-  "homepage": "https://github.com/SuperPony/js-learn#readme"
+  "homepage": "https://github.com/SuperPony/js-learn#readme",
+  "devDependencies": {
+    "husky": "^4.3.8"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "echo 666"
+    }
+  }
 }

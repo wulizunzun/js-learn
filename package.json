@@ -12,7 +12,8 @@
     "url": "git+https://github.com/SuperPony/js-learn.git"
   },
   "author": "",
-  "license": "ISC",
+
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/SuperPony/js-learn/issues"
   },

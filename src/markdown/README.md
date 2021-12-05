@@ -6,17 +6,20 @@
         - `[main]` ：被视为稳定分支 新版本打tag
 
         - `[develop]` : 用于集成各种功能开发的分支
-        
-        - `[feature]` : 用于开发新功能
+
+        - `[feature]` : 新功能开发 基于develop分支创建
 
         - `[release]` : 预发布分支 基于feature分支创建 进行发布前bug修复、文档生成和其他面向发布任务 完成后合并 main、develop分支
 
-        - `[hotfix]`  : 热更 基于min分支创建 用于修改项目遗留BUG修复并同步main、develop分支
+        - `[hotfix]`  : 热更 基于main分支创建 用于修改项目遗留BUG修复并同步main、develop分支
+
+        
+
+        
 
 * Git Commit 提交规范（基于angular）
 
     - 说明：统一团队Git Commit日志标准，便于后续代码 review 和版本发布进行bug修复、文档生成和其他面向发布任务 完成后合并 main、develop分支
-        
 
         - 提交类型限制：
             - `[feat]` ：新功能
@@ -41,6 +44,7 @@
 
             - 搜索跟README.md 文件相关的历史记录
                 - git log HEAD --grep docs(README.md)
+
         
 
     

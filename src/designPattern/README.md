@@ -176,11 +176,85 @@
 * 结构型模式
 
     - 代理模式
-        - s
+        - 由于一个对象不能直接引用另外一个对象，所以需要通过代理对象在这两个对象之间起到中介作用
+        - 可以在使用者和目标对象间加一个代理对象，通过代理额实现控制
+        - 代理模式 vs 装饰器模式 装饰器原来的功能不变还可以使用，代理模式改变原来的功能
+
+            ```javascript
+                let wangy = {
+                    name : '王燕',
+                    age : 31,
+                    height : 165
+                }
+
+                let wangMaMa = new Proxy(wangy,{
+                    get(target,key){
+                        if(key === 'age'){
+                            return target.age - 2
+                        }else if(key === 'height'){
+                            return target.height + 3
+                        }else{
+                            return target[key]
+                        }
+                    },
+
+                    set(target,key,value){
+                        if(key === 'boyFriend'){
+                            let boyFriend = value;
+                        if(boyFriend.age > 40){
+                            throw Error('太老了')
+                        }else if(boyFriend.salary < 5000){
+                            throw Error('太穷了')
+                        }else{
+                            console.log("key,",key)
+                            target[key] = value
+                        }
+                    }
+                })
+                
+                wangMaMa.boyFriend = {
+                    age : 25,
+                    salary:8000
+                }
+                
+                // wangMaMa.age // 29
+            ```
         
     - 装饰器模式
         - 在不改变其原有的结构和功能为对象添加新功能
         - 装饰比继承更加灵活
 
+            ```javascript
+               // AOP模式：就是在函数执行之前或之后添加一些额外的逻辑，而不需要修改函数的功能
+               Function.prototype.before = function(beforeFn){
+                    let _this = this;
+
+                    return function(){
+                        beforeFn.apply(this,arguments)
+                        _this.apply(this,arguments)
+                    }
+                }
+
+                Function.prototype.after = function(afterFn){
+                    let _this = this;
+
+                    return function(){
+                        _this.apply(this,arguments)
+                        afterFn.apply(this,arguments)
+                    }
+                }
+
+                function buy(money,goods){
+                    console.log(`花${money}元买${goods}`);
+                }
+
+                buy = buy.before(function(){
+                    console.log("购买东西之前");
+                }).after(function(){
+                    console.log("函数执行之后");
+                }) 
+
+                buy(25,'牛肉')
+            ```
 
     

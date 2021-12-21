@@ -257,4 +257,83 @@
                 buy(25,'牛肉')
             ```
 
+    - 策略模式
+        - 将定义的一组算法封装起来，使其相互之间可以替换。封装的算法具有一定独立性，不会随客户端变化而变化
+        - 避免大量的if else 或者 switch case
+
+            ```javascript
+                (function(){
+                    let form = {
+                        userName : "123",
+                        isMobile:13373781946
+                    }
+
+                    // 策略模式
+                    let validator = (function(){
+                        // 这是一组规则
+                        let rules = {
+                            notEmpty(val,msg){
+                                if(!val && val !== 0){
+                                    return msg
+                                }
+                            },
+
+                            minLength(val,min,msg){
+                                if(!val && val.length < min ){
+                                    return msg
+                                }
+                            },
+
+                            maxLength(val,max,msg){
+                                if(!val && val.length > max ){
+                                    return msg
+                                }
+                            },
+
+                            isMobile(val,msg){
+                                if(!/^[1][0,3,4,5,6,7,8,9][0-9]{9}$/.test(val)){
+                                    return msg
+                                }
+                            }
+
+                        }
+
+                        let checks = [];
+
+                        // 增加校验的项目
+                        function add(value,rule){
+                            checks.push(function(){
+                                let name = rule.shift()
+                                rule.unshift(value)  
+                                console.log()
+                                return rules[name] && rules[name](...rule)
+                            })
+                        }
+
+                        function start(){
+                            for(let i = 0; i < checks.length; i++){
+                                let msg = checks[i]();
+                                if(msg){
+                                    return msg
+                                }
+                            }
+                        }   
+
+                        return {
+                            add,
+                            start
+                        }
+                    })()
+
+                    validator.add(form.userName,['notEmpty','用户名不能为空'])
+                    validator.add(form.isMobile,['isMobile','手机格式不正确'])
+                    let msg = validator.start()
+                    if(msg){
+                        alert(msg)
+                        return;
+                    }
+                    console.log('通过')
+                })()
+            ```
+
     

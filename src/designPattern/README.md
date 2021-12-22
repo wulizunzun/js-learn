@@ -265,7 +265,8 @@
                 (function(){
                     let form = {
                         userName : "123",
-                        isMobile:13373781946
+                        isMobile:13373781946,
+                        isEmail:"1204184898@qq.com"
                     }
 
                     // 策略模式
@@ -319,14 +320,25 @@
                             }
                         }   
 
+                        function addRule(name,rule){
+                            rules[name] = rule
+                        }
+
                         return {
                             add,
-                            start
+                            start,
+                            addRule
                         }
                     })()
 
+                    validator.addRule('isEmail',function(val,msg){
+                        if(!/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(val)){
+                            return msg
+                        }
+                    })
                     validator.add(form.userName,['notEmpty','用户名不能为空'])
                     validator.add(form.isMobile,['isMobile','手机格式不正确'])
+                    validator.add(form.isEmail,['isEmail','手机格式不正确'])
                     let msg = validator.start()
                     if(msg){
                         alert(msg)
@@ -335,5 +347,50 @@
                     console.log('通过')
                 })()
             ```
+    - 模板方法
+        - 模板方法模式在一个方法定义一个算法的骨架，而将一些步骤的实现延迟到子类中
+        - 模板方法使得子类可以在不改变算法结构的情况下，重新定义算法中某些步骤的具体实现
+        - 一般有两部分组成，第一部分是抽象父类，第二部分是具体的实现子类
+        - 好莱坞原则，子类放弃了控制权，改由父类调用
+            - 发布订阅
+            - 回调函数
 
+                ```javascript
+                    class Parson{
+                        dinner(){
+                            this.buy();
+                            this.cook();
+                            this.eat();
+                        }
+
+                        buy(){
+                            throw new Error('必须由子类实现！');
+                        }
+
+                        cook(){
+                            throw new Error('必须由子类实现！');
+                        }
+
+                        eat(){
+                            throw new Error('必须由子类实现！');
+                        }
+                    }
+
+                    class jiang extends Parson{
+                        buy(){
+                            console.log('买黄瓜');
+                        }
+
+                        cook(){
+                            console.log('做黄瓜');
+                        }
+
+                        eat(){
+                            console.log('吃黄瓜');
+                        }
+                    }
+
+                    let j = new jiang();
+                    j.dinner();
+                ```
     
